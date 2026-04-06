@@ -74,7 +74,7 @@ body{
 
 #global-canvas{
   position:fixed;inset:0;width:100%;height:100%;
-  z-index:0;pointer-events:none;opacity:0.22;
+  z-index:0;pointer-events:none;opacity:0.55;
 }
 
 nav,section,footer,.ticker,#ticket-modal{
@@ -205,7 +205,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .bt{font-family:'DM Serif Display',serif;font-size:16px;line-height:1.88;color:var(--text-dim);margin-bottom:22px}
 
 /* ── ABOUT ── */
-#about{background:rgba(12,9,16,.92);padding:0}
+#about{background:transparent;padding:0}
 .about-txt{
   padding:80px 72px;display:flex;flex-direction:column;justify-content:center;
   max-width:960px;margin:0 auto;width:100%;
@@ -223,7 +223,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .fv{font-family:'Shippori Mincho B1',serif;font-size:14px;color:rgba(240,236,228,.76);font-weight:600;letter-spacing:.025em}
 
 /* ── PROGRAM ── */
-#program{background:rgba(8,6,13,.9);border-top:1px solid rgba(240,236,228,.04)}
+#program{background:transparent;border-top:1px solid rgba(240,236,228,.04)}
 .ph{text-align:center;margin-bottom:80px}
 .ph p{font-family:'DM Serif Display',serif;font-size:16px;color:rgba(240,236,228,.35);margin-top:14px;font-style:italic}
 .pi{
@@ -263,7 +263,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .play-song-btn:hover .ps-icon{transform:scale(1.2)}
 
 /* ── MESSAGE ── */
-#message{background:rgba(12,9,16,.92);border-top:1px solid rgba(240,236,228,.04)}
+#message{background:transparent;border-top:1px solid rgba(240,236,228,.04)}
 .msg-c{max-width:700px;margin:0 auto;text-align:center}
 .msg-jp{font-family:'Noto Serif JP',serif;font-weight:200;font-size:12px;letter-spacing:.65em;color:rgba(var(--c2-rgb),.42);margin-bottom:46px}
 .msg-body{
@@ -275,7 +275,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .msg-date{font-size:13px;color:rgba(240,236,228,.28);margin-top:8px;font-style:italic}
 
 /* ── GALLERY ── */
-#gallery{background:rgba(8,6,13,.88);border-top:1px solid rgba(240,236,228,.04);padding:0}
+#gallery{background:transparent;border-top:1px solid rgba(240,236,228,.04);padding:0}
 .gal-hdr{padding:80px 60px 44px;max-width:1160px;margin:0 auto}
 .gal-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:260px 260px;gap:3px}
 .gc{overflow:hidden;position:relative;cursor:pointer;background:#0d0a14}
@@ -298,7 +298,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .gal-pad{padding-bottom:100px}
 
 /* ── EMAIL SIGNUP ── */
-#notify{background:rgba(12,9,16,.95);border-top:1px solid rgba(240,236,228,.04);padding:100px 0}
+#notify{background:transparent;border-top:1px solid rgba(240,236,228,.04);padding:100px 0}
 .notify-wrap{max-width:640px;margin:0 auto;text-align:center}
 .notify-wrap .tag{justify-content:center}
 .notify-desc{font-family:'DM Serif Display',serif;font-size:16px;color:rgba(240,236,228,.45);line-height:1.8;margin-bottom:44px;font-style:italic}
@@ -328,7 +328,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .notify-msg.error{color:rgba(220,80,80,.8)}
 
 /* ── TICKET SECTION ── */
-#ticket{background:rgba(12,9,16,.92);border-top:1px solid rgba(240,236,228,.04)}
+#ticket{background:transparent;border-top:1px solid rgba(240,236,228,.04)}
 .tkt-wrap{max-width:840px;margin:0 auto;text-align:center}
 .tkt-card{border:1px solid rgba(var(--c2-rgb),.18);padding:80px 56px;position:relative}
 .tkt-card::before,.tkt-card::after{content:'';position:absolute;width:42px;height:42px}
@@ -529,7 +529,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .tkt-notice a:hover{color:var(--c2)}
 
 /* ── FOOTER ── */
-footer{background:rgba(8,6,13,.95);border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center}
+footer{background:transparent;border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center}
 .ft-n{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:200;letter-spacing:.42em;color:rgba(240,236,228,.38);margin-bottom:10px}
 .ft-bar{width:30px;height:1px;background:var(--c1);margin:18px auto}
 .ft-cp{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(240,236,228,.15)}
@@ -1231,14 +1231,38 @@ function startAmbient() {
   loadAmbient(0, true);
 }
 
-// Trigger on first real user gesture (scroll or click)
-document.addEventListener('scroll', startAmbient, { once: true });
-document.addEventListener('click', function onFirstClick(e) {
-  // ballade button handles its own flow
-  if (e.target.closest && e.target.closest('#ballade-btn')) return;
-  startAmbient();
-  document.removeEventListener('click', onFirstClick);
-});
+// Try autoplay immediately — works if browser allows it
+// Falls back to first user gesture (scroll/click) if blocked
+function tryAutoplay() {
+  if (musicStarted) return;
+  musicStarted = true;
+  document.getElementById('music-bar').classList.add('visible');
+  audio.src = encodeURI(TRACKS[0].file);
+  audio.volume = volume;
+  audio.load();
+  audio.play().then(() => {
+    setMbInfo(TRACKS[0].title, TRACKS[0].artist, 'Next: ' + TRACKS[1].title);
+    isPlaying = true;
+    updatePlayBtn();
+  }).catch(() => {
+    // Browser blocked autoplay — reset and wait for user gesture
+    musicStarted = false;
+    document.getElementById('music-bar').classList.remove('visible');
+    document.addEventListener('scroll', startAmbient, { once: true });
+    document.addEventListener('click', function onFirstClick(e) {
+      if (e.target.closest && e.target.closest('#ballade-btn')) return;
+      startAmbient();
+      document.removeEventListener('click', onFirstClick);
+    });
+  });
+}
+
+// Try autoplay as soon as DOM is ready
+if (document.readyState === 'complete') {
+  setTimeout(tryAutoplay, 300);
+} else {
+  window.addEventListener('load', () => setTimeout(tryAutoplay, 300));
+}
 
 function togglePlay() {
   if (!musicStarted) {
@@ -1293,35 +1317,43 @@ function resetBalladeBtn() {
 }
 
 function playBallade() {
-  // If already in ballade mode, toggle pause/play
+  // Toggle pause/play if already in ballade mode
   if (isBalladeMode) {
     if (isPlaying) {
       audio.pause();
       document.getElementById('ballade-icon').textContent = '▶';
       document.getElementById('ballade-btn-txt').textContent = 'ÉCOUTER LA BALLADE';
     } else {
-      audio.play().catch(() => {});
-      document.getElementById('ballade-icon').textContent = '⏸';
-      document.getElementById('ballade-btn-txt').textContent = 'Pause';
+      audio.play().then(() => {
+        document.getElementById('ballade-icon').textContent = '⏸';
+        document.getElementById('ballade-btn-txt').textContent = 'Pause';
+      }).catch(() => {});
     }
     return;
   }
 
-  isBalladeMode  = true;
-  musicStarted   = true;
+  // Start ballade fresh
+  isBalladeMode = true;
+  musicStarted  = true;
 
-  document.getElementById('ballade-icon').textContent     = '⌛';
-  document.getElementById('ballade-btn-txt').textContent  = 'Loading…';
+  document.getElementById('ballade-icon').textContent    = '⌛';
+  document.getElementById('ballade-btn-txt').textContent = 'Loading…';
   setMbInfo('Ballade No. 1 in G minor, Op. 23', 'Frédéric Chopin', '');
   document.getElementById('music-bar').classList.add('visible');
 
+  // Stop whatever is playing first
+  audio.pause();
+  audio.src = encodeURI(BALLADE_FILE);
   audio.volume = volume;
+  audio.load();
 
-  playSrc(BALLADE_FILE).then(() => {
+  audio.play().then(() => {
     document.getElementById('ballade-icon').textContent    = '⏸';
     document.getElementById('ballade-btn-txt').textContent = 'Pause';
+    isPlaying = true;
+    updatePlayBtn();
   }).catch(err => {
-    console.warn('Ballade play failed:', err);
+    console.warn('Ballade blocked:', err);
     isBalladeMode = false;
     resetBalladeBtn();
   });
