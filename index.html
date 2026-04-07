@@ -22,25 +22,6 @@
     const app = initializeApp(firebaseConfig);
     const db  = getFirestore(app);
 
-    // ── Tracking visiteurs (RGPD-friendly, sans IP) ──
-    async function trackVisit() {
-      try {
-        const res = await fetch("https://ipapi.co/json/");
-        const geo = await res.json();
-        await addDoc(collection(db, "visitors"), {
-          city:        geo.city         || null,
-          region:      geo.region       || null,
-          country:     geo.country_name || null,
-          countryCode: geo.country_code || null,
-          timezone:    geo.timezone     || null,
-          source:      "site",
-          timestamp:   serverTimestamp()
-          // ⚠ Pas d'IP stockée → conforme RGPD
-        });
-      } catch(e) { console.warn("Track skipped", e); }
-    }
-    trackVisit();
-
     // ── Waitlist emails ──
     window.__saveEmail = async function(email) {
       try {
