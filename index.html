@@ -77,6 +77,40 @@
       } catch(e) { console.error('deleteGallery error:', e); return { ok: false }; }
     };
 
+    // ── Compteur de visiteurs temps réel ──
+    const { onSnapshot, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const visitorRef = doc(db, "config", "visitors");
+
+    // Incrémenter au chargement
+    try {
+      const snap = await getDoc(visitorRef);
+      if (snap.exists()) {
+        await updateDoc(visitorRef, { count: snap.data().count + 1 });
+      } else {
+        await setDoc(visitorRef, { count: 1 });
+      }
+    } catch(e) { console.error('visitor increment error:', e); }
+
+    // Écoute temps réel — se met à jour pour tous les visiteurs instantanément
+    let firstSnapshot = true;
+    onSnapshot(visitorRef, (snap) => {
+      if (!snap.exists()) return;
+      const count = snap.data().count;
+      const els = document.querySelectorAll('.visitor-count');
+      els.forEach(el => {
+        if (firstSnapshot) {
+          animateCounter(el, count);
+        } else {
+          // Mise à jour en direct : petit flash pour signaler le changement
+          el.style.transition = 'color .3s';
+          el.style.color = 'rgba(var(--c2-rgb), 0.9)';
+          el.textContent = count.toLocaleString('fr-FR');
+          setTimeout(() => { el.style.color = ''; }, 600);
+        }
+      });
+      firstSnapshot = false;
+    });
+
     // ── Charger les réglages au démarrage ──
     window.__loadSettings().then(res => {
       if (!res.ok || !res.data) return;
@@ -112,6 +146,7 @@
     window.__uploadGalleryImage  = async () => ({ ok: false });
     window.__loadGalleryImages   = async () => ({ ok: false, items: [] });
     window.__deleteGalleryImage  = async () => ({ ok: false });
+    window.__incrementVisitorCount = async () => ({ ok: false, count: null });
   }
 </script>
 
@@ -609,6 +644,10 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
 .ft-n{font-family:'Noto Serif JP',serif;font-size:15px;font-weight:200;letter-spacing:.42em;color:rgba(240,236,228,.38);margin-bottom:10px}
 .ft-bar{width:30px;height:1px;background:var(--c1);margin:18px auto}
 .ft-cp{font-size:9px;letter-spacing:.32em;text-transform:uppercase;color:rgba(240,236,228,.15)}
+.ft-visitors{margin:28px auto 20px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.ft-vis-label{font-size:8px;letter-spacing:.55em;text-transform:uppercase;color:rgba(var(--c2-rgb),.3);font-family:"DM Serif Display",serif}
+.ft-vis-count{font-family:"Shippori Mincho B1",serif;font-size:34px;font-weight:600;color:rgba(var(--c2-rgb),.55);letter-spacing:.04em;line-height:1}
+.ft-vis-sub{font-family:"DM Serif Display",serif;font-size:9px;letter-spacing:.28em;color:rgba(240,236,228,.12);text-transform:uppercase;margin-top:2px}
 
 /* ── ADMIN ── */
 #adm-ov{display:none;position:fixed;inset:0;z-index:900;background:var(--bg);overflow-y:auto}
@@ -901,6 +940,11 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
 <footer>
   <div class="ft-n">秋山まひる — Mahiruu Akiyama</div>
   <div class="ft-bar"></div>
+  <div class="ft-visitors">
+    <div class="ft-vis-label">Visiteurs</div>
+    <div class="ft-vis-count visitor-count">—</div>
+    <div class="ft-vis-sub">personnes ont découvert cette page</div>
+  </div>
   <div class="ft-cp">© 2027 Mahiruu Akiyama — Tous droits réservés</div>
 </footer>
 
@@ -1313,7 +1357,7 @@ function startMusic() {
   const t = TRACKS[0];
   const next = TRACKS[1 % TRACKS.length];
   setMbInfo(t.title, t.artist, 'Next: ' + next.title);
-  playSrc(t.file).catch(() => {});
+  playSrc(t.file).then(()=>{ audio.currentTime = 250; }).catch(()=>{});
 }
 
 // Préparer le titre dès le chargement (sans jouer)
@@ -1404,6 +1448,7 @@ function playBallade() {
   audio.volume = volume;
 
   playSrc(BALLADE_FILE).then(() => {
+    audio.currentTime = 250; // Démarre à 4min10
     document.getElementById('ballade-icon').textContent    = '⏸';
     document.getElementById('ballade-btn-txt').textContent = 'Pause';
   }).catch(err => {
@@ -1654,6 +1699,21 @@ function openLB(cell){const img=cell.querySelector('img');if(img){document.getEl
 function openLBSrc(src){document.getElementById('lb-img').src=src;document.getElementById('lb').classList.add('open')}
 function closeLB(){document.getElementById('lb').classList.remove('open')}
 function toast(msg){const el=document.getElementById('toast-el');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
+
+function animateCounter(el, target) {
+  const duration = 1800;
+  const start = performance.now();
+  const from = 0;
+  function step(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(from + (target - from) * ease);
+    el.textContent = current.toLocaleString('fr-FR');
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target.toLocaleString('fr-FR');
+  }
+  requestAnimationFrame(step);
+}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm();closeTicketModal()}});
 
 /* ─── ENTRY SCREEN ─── */
@@ -1720,7 +1780,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm(
       const t0 = TRACKS[0];
       const next0 = TRACKS[1 % TRACKS.length];
       setMbInfo(t0.title, t0.artist, 'Next: ' + next0.title);
-      playSrc(t0.file).catch(()=>{});
+      playSrc(t0.file).then(()=>{ audio.currentTime = 250; }).catch(()=>{});
     }
     setTimeout(()=>{ screen.style.display='none'; }, 950);
     screen.removeEventListener('click', enter);
