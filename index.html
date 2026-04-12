@@ -10,7 +10,7 @@
 <script type="module">
   try {
     const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js");
-    const { getFirestore, collection, addDoc, serverTimestamp, doc, setDoc, getDoc, getDocs, deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    const { getFirestore, collection, addDoc, serverTimestamp, doc, setDoc, getDoc, getDocs, deleteDoc, updateDoc, onSnapshot } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     const firebaseConfig = {
       apiKey: "AIzaSyAAj0U9y8wkT4Sf_qHMNU4Wr6ZDWtjDzAk",
       authDomain: "reci-2f898.firebaseapp.com",
@@ -78,7 +78,6 @@
     };
 
     // ── Compteur de visiteurs temps réel ──
-    const { onSnapshot, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
     const visitorRef = doc(db, "config", "visitors");
 
     // Incrémenter au chargement
