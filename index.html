@@ -136,15 +136,15 @@
 html{scroll-behavior:smooth}
 
 :root{
-  --c1:#c8502a;
-  --c2:#e8a06a;
-  --bg:#08060d;
-  --bg2:#0c0910;
+  --c1:#2a5c8a;
+  --c2:#6aaee8;
+  --bg:#060a10;
+  --bg2:#080c14;
   --text:#f0ece4;
   --text-dim:rgba(240,236,228,.54);
   --text-faint:rgba(240,236,228,.28);
-  --c1-rgb:200,80,42;
-  --c2-rgb:232,160,106;
+  --c1-rgb:42,92,138;
+  --c2-rgb:106,174,232;
 }
 
 body{
@@ -179,8 +179,8 @@ nav.scrolled{background:rgba(8,6,13,.92);backdrop-filter:blur(16px);border-botto
 .nav-links{display:flex;gap:36px;list-style:none}
 .nav-links a{font-family:'DM Serif Display',serif;font-size:10px;letter-spacing:.22em;color:rgba(240,236,228,.4);text-decoration:none;text-transform:uppercase;transition:color .25s}
 .nav-links a:hover{color:var(--c2)}
-.nav-cta{font-family:'DM Serif Display',serif;font-size:9px;letter-spacing:.28em;text-transform:uppercase;border:1px solid rgba(var(--c1-rgb),.5);color:var(--c2);background:none;padding:9px 18px;cursor:pointer;transition:all .3s}
-.nav-cta:hover{background:rgba(var(--c1-rgb),.18);border-color:var(--c2)}
+.nav-cta{font-family:'DM Serif Display',serif;font-size:18px;letter-spacing:.05em;color:var(--c2);background:none;border:none;padding:4px 8px;cursor:pointer;transition:all .3s;opacity:.7}
+.nav-cta:hover{opacity:1;transform:scale(1.15)}
 
 /* ── HERO ── */
 #hero{position:relative;width:100%;height:100vh;overflow:hidden}
@@ -209,11 +209,10 @@ nav.scrolled{background:rgba(8,6,13,.92);backdrop-filter:blur(16px);border-botto
 }
 .hero-pill{
   display:inline-flex;align-items:center;gap:14px;
-  border:1px solid rgba(var(--c2-rgb),.28);padding:13px 34px;
+  padding:13px 34px;
   font-family:'DM Serif Display',serif;font-size:12px;letter-spacing:.28em;
   color:rgba(var(--c2-rgb),.75);text-transform:uppercase;
   opacity:0;animation:fu 1.2s ease .95s forwards;
-  backdrop-filter:blur(10px);background:rgba(8,6,13,.18);
 }
 .pill-dot{width:5px;height:5px;background:var(--c2);border-radius:50%;animation:blink 2.2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
@@ -230,7 +229,7 @@ nav.scrolled{background:rgba(8,6,13,.92);backdrop-filter:blur(16px);border-botto
 /* ── MUSIC PLAYER BAR ── */
 #music-bar{
   position:fixed;bottom:0;left:0;right:0;z-index:500;
-  background:rgba(8,6,13,.97);border-top:1px solid rgba(var(--c1-rgb),.22);
+  background:rgba(4,8,16,.97);border-top:1px solid rgba(var(--c1-rgb),.22);
   padding:10px 40px;display:flex;align-items:center;gap:18px;
   backdrop-filter:blur(20px);
   transform:translateY(0);
@@ -238,12 +237,12 @@ nav.scrolled{background:rgba(8,6,13,.92);backdrop-filter:blur(16px);border-botto
 }
 #music-bar.visible{transform:translateY(0)}
 .mb-btn{
-  width:38px;height:38px;border-radius:50%;
-  border:1px solid rgba(var(--c1-rgb),.5);background:rgba(var(--c1-rgb),.12);
+  width:32px;height:32px;
+  border:none;background:none;
   color:var(--c2);cursor:pointer;display:flex;align-items:center;justify-content:center;
-  font-size:14px;transition:all .3s;flex-shrink:0;
+  font-size:16px;transition:all .3s;flex-shrink:0;opacity:.7;
 }
-.mb-btn:hover{background:rgba(var(--c1-rgb),.3)}
+.mb-btn:hover{opacity:1;transform:scale(1.15)}
 .mb-info{flex:1;min-width:0}
 .mb-title{font-family:'Shippori Mincho B1',serif;font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mb-sub{font-size:10px;letter-spacing:.2em;color:rgba(var(--c2-rgb),.45);text-transform:uppercase;margin-top:2px}
@@ -309,10 +308,10 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .ph{text-align:center;margin-bottom:80px}
 .ph p{font-family:'DM Serif Display',serif;font-size:16px;color:rgba(240,236,228,.35);margin-top:14px;font-style:italic}
 .pi{
-  display:grid;grid-template-columns:68px 1fr 88px;
+  display:grid;grid-template-columns:1fr 88px;
   align-items:start;gap:36px;
   padding:42px 0;border-bottom:1px solid rgba(240,236,228,.055);
-  position:relative;overflow:hidden;transition:.3s;
+  position:relative;transition:.3s;
 }
 .pi::before{
   content:'';position:absolute;left:0;top:0;bottom:0;width:0;
@@ -320,10 +319,7 @@ h2.ttl em{color:var(--c2);font-style:normal}
   transition:width .4s;
 }
 .pi:hover::before{width:100%}
-.pin{
-  font-family:'Playfair Display',serif;font-size:58px;font-weight:900;font-style:italic;
-  color:rgba(var(--c1-rgb),.1);line-height:1;letter-spacing:-.03em;align-self:center;
-}
+.pin{display:none}
 .pc{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--c1);margin-bottom:9px}
 .pt{font-family:'Shippori Mincho B1',serif;font-size:23px;font-weight:600;color:var(--text);letter-spacing:.02em;margin-bottom:5px}
 .ps{font-family:'DM Serif Display',serif;font-size:13px;color:rgba(240,236,228,.32);font-style:italic;margin-bottom:13px}
@@ -333,14 +329,14 @@ h2.ttl em{color:var(--c2);font-style:normal}
 .play-song-btn{
   display:inline-flex;align-items:center;gap:10px;
   margin-top:18px;
-  border:1px solid rgba(var(--c1-rgb),.38);
-  padding:9px 20px;
+  padding:9px 4px;
   font-family:'DM Serif Display',serif;font-size:10px;letter-spacing:.28em;
   text-transform:uppercase;color:var(--c2);
-  background:rgba(var(--c1-rgb),.08);cursor:pointer;
+  background:none;border:none;cursor:pointer;
   transition:all .3s;
+  position:relative;z-index:10;
 }
-.play-song-btn:hover{background:rgba(var(--c1-rgb),.22);border-color:var(--c2)}
+.play-song-btn:hover{opacity:.7}
 .play-song-btn .ps-icon{font-size:15px;transition:transform .3s}
 .play-song-btn:hover .ps-icon{transform:scale(1.2)}
 
@@ -412,10 +408,8 @@ h2.ttl em{color:var(--c2);font-style:normal}
 /* ── TICKET SECTION ── */
 #ticket{border-top:1px solid rgba(240,236,228,.04)}
 .tkt-wrap{max-width:840px;margin:0 auto;text-align:center}
-.tkt-card{border:1px solid rgba(var(--c2-rgb),.18);padding:80px 56px;position:relative}
-.tkt-card::before,.tkt-card::after{content:'';position:absolute;width:42px;height:42px}
-.tkt-card::before{top:-1px;left:-1px;border-top:2px solid var(--c1);border-left:2px solid var(--c1)}
-.tkt-card::after{bottom:-1px;right:-1px;border-bottom:2px solid var(--c1);border-right:2px solid var(--c1)}
+.tkt-card{padding:80px 56px;position:relative}
+.tkt-card::before,.tkt-card::after{content:none}
 .tkt-orn{font-size:9px;letter-spacing:.6em;text-transform:uppercase;color:rgba(var(--c1-rgb),.45);margin-bottom:30px}
 .tkt-ttl{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(30px,4vw,52px);font-weight:700;color:var(--text);margin-bottom:12px}
 .tkt-s{font-size:15px;color:rgba(240,236,228,.32);margin-bottom:56px;font-style:italic}
@@ -700,6 +694,52 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
 </head>
 <body>
 
+<!-- ÉCRAN D'ENTRÉE — clic requis pour lancer la musique -->
+<div id="entry-screen" style="
+  position:fixed;inset:0;z-index:2000;
+  background:#060a10;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:opacity .9s ease;
+">
+  <!-- shader de fond identique -->
+  <canvas id="entry-canvas" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.28"></canvas>
+
+  <div style="position:relative;z-index:1;text-align:center;pointer-events:none;padding:0 30px">
+    <div style="font-family:'Noto Serif JP',serif;font-size:12px;font-weight:200;letter-spacing:.65em;color:rgba(106,174,232,.5);margin-bottom:36px;animation:fu 1.2s ease .2s both">
+      秋山まひる
+    </div>
+    <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(52px,10vw,120px);font-weight:700;line-height:.9;letter-spacing:-.025em;color:#f0ece4;text-shadow:0 0 80px rgba(42,92,138,.4);animation:fu 1.2s ease .4s both">
+      <span style="color:#6aaee8">Mahiruu</span><br>Akiyama
+    </div>
+    <div style="font-family:'Shippori Mincho B1',serif;font-size:clamp(12px,1.8vw,18px);letter-spacing:.22em;color:rgba(240,236,228,.3);margin-top:18px;animation:fu 1.2s ease .6s both">
+      Wiener Musikverein · 12 Avril 2027
+    </div>
+
+    <!-- Bouton entrer -->
+    <div style="margin-top:64px;animation:fu 1.2s ease 1s both">
+      <div style="
+        display:inline-block;
+        font-family:'DM Serif Display',serif;font-size:10px;letter-spacing:.52em;
+        text-transform:uppercase;color:rgba(106,174,232,.55);
+      ">
+        Entrer
+      </div>
+      <div style="font-family:'DM Serif Display',serif;font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:rgba(240,236,228,.15);margin-top:14px">
+        Cliquez pour accéder au site
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes pulse-border {
+  0%,100%{border-color:rgba(42,92,138,.45);color:rgba(106,174,232,.8)}
+  50%{border-color:rgba(42,92,138,.85);color:rgba(106,174,232,1)}
+}
+#entry-screen.fade-out{opacity:0;pointer-events:none}
+</style>
+
 <canvas id="global-canvas"></canvas>
 
 <nav id="nav" class="scrolled">
@@ -711,7 +751,7 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#notify">Tickets</a></li>
   </ul>
-  <button class="nav-cta" onclick="openAdm()">Admin</button>
+  <button class="nav-cta" onclick="openAdm()">♛</button>
 </nav>
 
 <!-- HERO -->
@@ -721,7 +761,6 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
     <div class="hero-h1"><em>Mahiruu</em><br>Akiyama</div>
     <div class="hero-sub" style="font-family:'Shippori Mincho B1',serif">京都生まれ · 奈良育ち · メスに在住</div>
     <div class="hero-pill">
-      <span class="pill-dot"></span>
       12 Avril 2027 · Wiener Musikverein · Vienne
     </div>
   </div>
@@ -734,16 +773,16 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
 <!-- TICKER -->
 <div class="ticker">
   <div class="ticker-inner">
-    <div class="ticker-item">Chopin · Ballade No.1 Op.23 <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Wiener Musikverein · Großer Saal <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">12 Avril 2027 · 20:00 <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Mahiruu Akiyama · Récital <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Kyoto · Nara · Metz · Vienne <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Chopin · Ballade No.1 Op.23 <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Wiener Musikverein · Großer Saal <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">12 Avril 2027 · 20:00 <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Mahiruu Akiyama · Récital <span class="ticker-sep">✦</span></div>
-    <div class="ticker-item">Kyoto · Nara · Metz · Vienne <span class="ticker-sep">✦</span></div>
+    <div class="ticker-item">Chopin · Ballade No.1 Op.23 <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Wiener Musikverein · Großer Saal <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">12 Avril 2027 · 20:00 <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Mahiruu Akiyama · Récital <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Kyoto · Nara · Metz · Vienne <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Chopin · Ballade No.1 Op.23 <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Wiener Musikverein · Großer Saal <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">12 Avril 2027 · 20:00 <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Mahiruu Akiyama · Récital <span class="ticker-sep">—</span></div>
+    <div class="ticker-item">Kyoto · Nara · Metz · Vienne <span class="ticker-sep">—</span></div>
   </div>
 </div>
 
@@ -759,7 +798,7 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
     <div class="pull-q" style="margin-top:36px" id="bio-quote">"The silence of Nara taught me that the space between sounds is a note like any other."</div>
     <p class="bt" id="bio4">Her Chopin unsettles habits in the best sense. No easy pathos, no virtuosity for its own sake. She digs, seeks the bone beneath the flesh, finds the precise melancholy where others find the general. Critics speak of a "rare interiority", a playing "heard from within".</p>
     <div class="facts">
-      <div class="fact"><div class="fl">Born</div><div class="fv" id="f1">Kyoto, 1996</div></div>
+      <div class="fact"><div class="fl">Born</div><div class="fv" id="f1">Kyoto, 2007</div></div>
       <div class="fact"><div class="fl">Childhood</div><div class="fv" id="f2">Nara, Japan</div></div>
       <div class="fact"><div class="fl">Residence</div><div class="fv" id="f3">Metz, France</div></div>
       <div class="fact"><div class="fl">Repertoire</div><div class="fv" id="f4">Chopin · Bach</div></div>
@@ -814,11 +853,11 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
     <h2 class="ttl" style="font-size:clamp(26px,3.2vw,42px)">Images</h2>
   </div>
   <div class="gal-grid" id="gal-grid">
-    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-ic">🎹</div><div class="gph-t">Piano · Récital</div></div></div>
-    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-ic">🦌</div><div class="gph-t">Nara</div></div></div>
-    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-ic">🦌</div><div class="gph-t">Nara</div></div></div>
-    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-ic">⛩️</div><div class="gph-t">Kyoto</div></div></div>
-    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-ic">🏛️</div><div class="gph-t">Musikverein</div></div></div>
+    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-t">Piano · Récital</div></div></div>
+    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-t">Nara</div></div></div>
+    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-t">Nara</div></div></div>
+    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-t">Kyoto</div></div></div>
+    <div class="gc" onclick="openLB(this)"><div class="gph"><div class="gph-t">Musikverein</div></div></div>
   </div>
   <div class="gal-pad"></div>
 </section>
@@ -845,7 +884,7 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
   <div class="container">
     <div class="tkt-wrap">
       <div class="tkt-card">
-        <div class="tkt-orn">✦ &nbsp; Box Office &nbsp; ✦</div>
+        <div class="tkt-orn">BOX OFFICE</div>
         <div class="tkt-ttl" id="tkt-ttl"><em>Recital</em> Mahiruu Akiyama</div>
         <div class="tkt-s" id="tkt-sub">Wiener Musikverein — Großer Saal — Vienna, Austria</div>
         <div class="tkt-cols">
@@ -865,84 +904,35 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
   <div class="ft-cp">© 2027 Mahiruu Akiyama — Tous droits réservés</div>
 </footer>
 
-<!-- TICKET MODAL — REDESIGNED -->
+<!-- POPUP BILLETTERIE FERMÉE -->
 <div id="ticket-modal" onclick="handleModalClick(event)">
-  <div class="tkt-modal-inner">
+  <div class="tkt-modal-inner" style="max-width:520px">
     <button class="tkt-modal-close" onclick="closeTicketModal()">✕ &nbsp; Fermer</button>
 
-    <div class="fake-ticket">
-      <!-- dimming overlay -->
-      <div class="tkt-dim"></div>
+    <div style="background:rgba(6,10,18,.96);padding:60px 52px;text-align:center;position:relative;">
 
-      <!-- unavailable stamp -->
-      <div class="ft-unavail">
-        <div class="ft-unavail-inner">Pas encore disponible</div>
-        <div class="ft-unavail-sub">Ouverture en 2027</div>
+      <div style="font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.55em;color:rgba(106,174,232,.3);margin-bottom:32px">秋山まひる</div>
+
+      <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.15">
+        Billetterie bientôt disponible
       </div>
 
-      <!-- header -->
-      <div class="tkt-head">
-        <div class="tkt-head-l">秋山まひる</div>
-        <div class="tkt-head-c">Billet de récital</div>
-        <div class="tkt-head-r">Vienne · 2027</div>
+      <div style="width:34px;height:1px;background:rgba(var(--c1-rgb),.4);margin:0 auto 28px"></div>
+
+      <p style="font-family:'DM Serif Display',serif;font-size:15px;color:rgba(240,236,228,.45);line-height:1.9;font-style:italic;margin-bottom:12px">
+        Les billets ne sont <strong style="color:rgba(var(--c2-rgb),.7);font-style:normal">pas encore en vente</strong>.
+      </p>
+      <p style="font-family:'DM Serif Display',serif;font-size:13px;color:rgba(240,236,228,.25);line-height:1.8;font-style:italic;margin-bottom:40px">
+        Laissez votre email pour être notifié dès la mise en vente.
+      </p>
+
+      <a href="#notify" onclick="closeTicketModal()" style="display:inline-block;padding:14px 44px;background:none;border:none;color:rgba(var(--c2-rgb),.7);font-family:'DM Serif Display',serif;font-size:10px;letter-spacing:.38em;text-transform:uppercase;text-decoration:none;transition:all .3s;border-bottom:1px solid rgba(var(--c2-rgb),.3)">
+        Me notifier →
+      </a>
+
+      <div style="margin-top:32px;font-family:'Noto Serif JP',serif;font-size:10px;letter-spacing:.35em;color:rgba(240,236,228,.12)">
+        Wiener Musikverein · 12 Avril 2027
       </div>
-
-      <!-- body -->
-      <div class="tkt-body">
-        <div class="tkt-b-l">
-          <div class="tkt-evt"><em>Mahiruu</em><br>Akiyama</div>
-          <div class="tkt-venue">Wiener Musikverein · Großer Saal</div>
-          <div class="tkt-field">
-            <div class="tkt-field-label">Date</div>
-            <div class="tkt-field-val">12 Avril 2027</div>
-          </div>
-          <div class="tkt-field">
-            <div class="tkt-field-label">Heure</div>
-            <div class="tkt-field-val">20:00</div>
-          </div>
-          <div class="tkt-field">
-            <div class="tkt-field-label">Lieu</div>
-            <div class="tkt-field-val">Vienne, Autriche</div>
-          </div>
-        </div>
-
-        <div class="tkt-divider"></div>
-
-        <div class="tkt-b-r">
-          <div class="tkt-field" style="margin-bottom:30px">
-            <div class="tkt-field-label">Tarif</div>
-            <div class="tkt-field-val large">40 — 130 €</div>
-          </div>
-          <div class="tkt-field">
-            <div class="tkt-field-label">Catégorie</div>
-            <div class="tkt-field-val" style="color:rgba(240,236,228,.28)">—</div>
-          </div>
-          <div class="tkt-field">
-            <div class="tkt-field-label">Place</div>
-            <div class="tkt-field-val" style="color:rgba(240,236,228,.28)">—</div>
-          </div>
-          <div class="tkt-field">
-            <div class="tkt-field-label">Rangée</div>
-            <div class="tkt-field-val" style="color:rgba(240,236,228,.28)">—</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- tear line -->
-      <hr class="tkt-tear">
-
-      <!-- footer strip -->
-      <div class="tkt-foot">
-        <div class="tkt-barcode" id="barcode-el"></div>
-        <div class="tkt-series">秋山まひる · 2027</div>
-        <div class="tkt-ref">RÉF : MA-VIE-2027-XXXX</div>
-      </div>
-    </div>
-
-    <div class="tkt-notice">
-      <div class="tkt-notice-icon">✦</div>
-      <p>La billetterie n'est <strong style="color:rgba(var(--c2-rgb),.6);font-style:normal">pas encore ouverte</strong>. L'ouverture est prévue début 2027.<br>
-      <a href="#notify" onclick="closeTicketModal()">→ Laissez votre email</a> pour être notifié dès la mise en vente.</p>
     </div>
   </div>
 </div>
@@ -987,15 +977,15 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
           <div class="adm-f">
             <label class="adm-l">Couleur primaire</label>
             <div class="clr-r">
-              <input type="color" class="clr-in" id="c1" value="#c8502a" oninput="applyColor1(this.value)">
-              <input class="inp" id="c1h" value="#c8502a" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c1').value=this.value;applyColor1(this.value)}">
+              <input type="color" class="clr-in" id="c1" value="#2a5c8a" oninput="applyColor1(this.value)">
+              <input class="inp" id="c1h" value="#2a5c8a" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c1').value=this.value;applyColor1(this.value)}">
             </div>
           </div>
           <div class="adm-f">
             <label class="adm-l">Couleur accentuée</label>
             <div class="clr-r">
-              <input type="color" class="clr-in" id="c2" value="#e8a06a" oninput="applyColor2(this.value)">
-              <input class="inp" id="c2h" value="#e8a06a" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c2').value=this.value;applyColor2(this.value)}">
+              <input type="color" class="clr-in" id="c2" value="#6aaee8" oninput="applyColor2(this.value)">
+              <input class="inp" id="c2h" value="#6aaee8" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c2').value=this.value;applyColor2(this.value)}">
             </div>
           </div>
           <div class="adm-f">
@@ -1013,7 +1003,7 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
           <div class="adm-ct">Photos de la galerie</div>
           <div class="upz">
             <input type="file" accept="image/*" multiple onchange="upGal(this)" id="gal-in">
-            <div class="upz-ic">📷</div>
+            <div class="upz-ic" style="font-size:18px;opacity:.2;margin-bottom:10px;font-family:'DM Serif Display',serif;letter-spacing:.2em">+</div>
             <div class="upz-t">Ajouter des photos</div>
           </div>
           <div class="gag" id="gag">
@@ -1097,8 +1087,8 @@ function applyTheme(t) {
 }
 
 /* ─── GLOBAL SHADER ─── */
-let shaderC2 = [0.91, 0.63, 0.26]; // default fire accent for shader
-let shaderC1 = [0.78, 0.31, 0.16]; // default fire primary
+let shaderC2 = [0.42, 0.68, 0.91]; // default blue accent for shader
+let shaderC1 = [0.16, 0.36, 0.54]; // default blue primary
 
 function hexToShaderVec(hex) {
   return [
@@ -1138,7 +1128,7 @@ function updateShaderColors(c1hex, c2hex) {
     r+=mo*.1;
     float f=fbm(uv+2.8*r+ti*.05);
     f=pow(f,1.35);
-    vec3 cBase=vec3(.03,.015,.055);
+    vec3 cBase=vec3(.02,.04,.08);
     vec3 cDark=uC1*0.28;
     vec3 cMid=uC1*0.82;
     vec3 cBright=uC2*1.05;
@@ -1197,14 +1187,9 @@ window.addEventListener('scroll',()=>{
 // ╚══════════════════════════════════════════════════════╝
 const TRACKS = [
   {
-    file: 'Drowning_love_best_part_-_Ali_Zein_-_SoundLoadMate_com.mp3',
-    title: 'Drowning Love (Best Part)',
-    artist: 'Ali Zein'
-  },
-  {
-    file: 'golden_hour__piano_instrumental__-_Chilled_Pig_-_SoundLoadMate_com.mp3',
-    title: 'Golden Hour',
-    artist: 'Chilled Pig'
+    file: '14_Ballade_No__1_in_G_minor__Op__23_-_Mr_Ost_-_SoundLoadMate_com.mp3',
+    title: 'Ballade No. 1 in G minor, Op. 23',
+    artist: 'Frédéric Chopin'
   },
   {
     file: 'Dreamy_Piano_-_Sergey_Bryukhno_-_SoundLoadMate_com.mp3',
@@ -1215,6 +1200,11 @@ const TRACKS = [
     file: 'When_the_Stars_Are_Shining_-_Sergey_Bryukhno_-_SoundLoadMate_com.mp3',
     title: 'When the Stars Are Shining',
     artist: 'Sergey Bryukhno'
+  },
+  {
+    file: 'golden_hour__piano_instrumental__-_Chilled_Pig_-_SoundLoadMate_com.mp3',
+    title: 'Golden Hour',
+    artist: 'Chilled Pig'
   },
 ];
 const BALLADE_FILE = '14_Ballade_No__1_in_G_minor__Op__23_-_Mr_Ost_-_SoundLoadMate_com.mp3';
@@ -1334,12 +1324,7 @@ window.addEventListener('DOMContentLoaded', () => {
   audio.src = encodeURI(t.file);
 });
 
-// Démarrer au premier clic sur la page
-document.addEventListener('click', function onFirstPlay(e) {
-  if (e.target.closest && e.target.closest('#mb-play-btn')) return; // géré par togglePlay
-  startMusic();
-  document.removeEventListener('click', onFirstPlay);
-}, { capture: true, once: true });
+// La musique est lancée via l'écran d'entrée
 
 function togglePlay() {
   if (!musicStarted) {
@@ -1670,6 +1655,83 @@ function openLBSrc(src){document.getElementById('lb-img').src=src;document.getEl
 function closeLB(){document.getElementById('lb').classList.remove('open')}
 function toast(msg){const el=document.getElementById('toast-el');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3000)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm();closeTicketModal()}});
+
+/* ─── ENTRY SCREEN ─── */
+(function(){
+  const screen = document.getElementById('entry-screen');
+  if(!screen) return;
+
+  // Mini shader pour l'écran d'entrée
+  const ec = document.getElementById('entry-canvas');
+  if(ec){
+    const gl2 = ec.getContext('webgl');
+    if(gl2){
+      function rsz2(){ ec.width=innerWidth; ec.height=innerHeight; gl2.viewport(0,0,ec.width,ec.height); }
+      rsz2(); window.addEventListener('resize',rsz2);
+      const vs2=`attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`;
+      const fs2=`precision mediump float;uniform float t;uniform vec2 res;
+      vec3 h3(vec2 p){vec3 q=vec3(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)),dot(p,vec2(419.2,371.9)));return fract(sin(q)*43758.5453);}
+      float n(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);float a=dot(h3(i),vec3(1,0,0)),b=dot(h3(i+vec2(1,0)),vec3(1,0,0)),c=dot(h3(i+vec2(0,1)),vec3(1,0,0)),d=dot(h3(i+vec2(1,1)),vec3(1,0,0));return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+      float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.1;a*=.5;}return v;}
+      void main(){
+        vec2 uv=(gl_FragCoord.xy/res-.5)*vec2(res.x/res.y,1.);
+        float ti=t*.14;
+        vec2 q=vec2(fbm(uv+ti*.4),fbm(uv+vec2(1.7,9.2)+ti*.3));
+        vec2 r=vec2(fbm(uv+2.*q+ti*.15),fbm(uv+2.*q+vec2(8.3,2.8)+ti*.2));
+        float f=fbm(uv+2.8*r+ti*.05);f=pow(f,1.35);
+        vec3 cBase=vec3(.02,.04,.08);
+        vec3 cMid=vec3(.16,.36,.54)*0.82;
+        vec3 cBright=vec3(.42,.68,.91)*1.05;
+        vec3 col=mix(cBase,cMid,clamp(f*2.2-.6,0.,1.));
+        col=mix(col,cBright,clamp(f*3.2-1.5,0.,1.));
+        float d=length(uv);col=mix(col,cBase,smoothstep(.28,.88,d));
+        float v=1.-dot(uv*1.08,uv*1.08);col*=v*v;
+        gl_FragColor=vec4(col,1.);
+      }`;
+      function mk2(type,src){const s=gl2.createShader(type);gl2.shaderSource(s,src);gl2.compileShader(s);return s;}
+      const pr2=gl2.createProgram();
+      gl2.attachShader(pr2,mk2(gl2.VERTEX_SHADER,vs2));
+      gl2.attachShader(pr2,mk2(gl2.FRAGMENT_SHADER,fs2));
+      gl2.linkProgram(pr2);gl2.useProgram(pr2);
+      const buf2=gl2.createBuffer();gl2.bindBuffer(gl2.ARRAY_BUFFER,buf2);
+      gl2.bufferData(gl2.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl2.STATIC_DRAW);
+      const pl2=gl2.getAttribLocation(pr2,'p');gl2.enableVertexAttribArray(pl2);gl2.vertexAttribPointer(pl2,2,gl2.FLOAT,false,0,0);
+      const uT2=gl2.getUniformLocation(pr2,'t');const uR2=gl2.getUniformLocation(pr2,'res');
+      const s02=Date.now();
+      let entryLoop=true;
+      (function loop2(){
+        if(!entryLoop) return;
+        gl2.uniform1f(uT2,(Date.now()-s02)*.001);
+        gl2.uniform2f(uR2,ec.width,ec.height);
+        gl2.drawArrays(gl2.TRIANGLES,0,6);
+        requestAnimationFrame(loop2);
+      })();
+      // Stop shader when hidden
+      screen.addEventListener('transitionend',()=>{ entryLoop=false; },{ once:true });
+    }
+  }
+
+  // Clic → fermer l'écran + lancer la musique
+  screen.addEventListener('click', function enter() {
+    screen.classList.add('fade-out');
+    // Lancer la musique immédiatement au clic (user gesture requis par navigateur)
+    if(!musicStarted){
+      musicStarted = true;
+      const t0 = TRACKS[0];
+      const next0 = TRACKS[1 % TRACKS.length];
+      setMbInfo(t0.title, t0.artist, 'Next: ' + next0.title);
+      playSrc(t0.file).catch(()=>{});
+    }
+    setTimeout(()=>{ screen.style.display='none'; }, 950);
+    screen.removeEventListener('click', enter);
+  });
+
+  // Bloquer le scroll pendant l'écran d'entrée
+  document.body.style.overflow = 'hidden';
+  screen.addEventListener('transitionend', ()=>{
+    document.body.style.overflow = '';
+  }, { once: true });
+})();
 </script>
 </body>
 </html>
