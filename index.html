@@ -1327,6 +1327,7 @@ const TRACKS = [
 const BALLADE_FILE = '14_Ballade_No__1_in_G_minor__Op__23_-_Mr_Ost_-_SoundLoadMate_com.mp3';
 
 const audio = new Audio();
+window.__originalMusicAudio = audio;
 audio.preload = 'none';
 let currentTrack = 0;
 let isPlaying = false;
@@ -1844,17 +1845,18 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm(
     }
   }
 
-  // Clic → fermer l'écran + lancer la musique
+  // Clic → fermer l'écran. La musique d'hommage est lancée par
+  // le script memorial ci-dessous : ne surtout pas démarrer la Ballade ici.
   screen.addEventListener('click', function enter() {
     screen.classList.add('fade-out');
-    // Lancer la musique immédiatement au clic (user gesture requis par navigateur)
-    if(!musicStarted){
-      musicStarted = true;
-      const t0 = TRACKS[0];
-      const next0 = TRACKS[1 % TRACKS.length];
-      setMbInfo(t0.title, t0.artist, 'Next: ' + next0.title);
-      playSrc(t0.file).then(()=>{ audio.currentTime = 250; }).catch(()=>{});
-    }
+    musicStarted = true; // empêche le lecteur original de démarrer la Ballade
+    try {
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+    } catch (e) {}
+    const originalBar = document.getElementById('music-bar');
+    if (originalBar) originalBar.classList.remove('visible');
     setTimeout(()=>{ screen.style.display='none'; }, 950);
     screen.removeEventListener('click', enter);
   });
@@ -1879,6 +1881,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm(
     document.body.classList.add('memorial-mode');
     entry.classList.add('fade-out');
     window.setTimeout(() => { entry.style.display = 'none'; }, 950);
+    // Arrêter toute lecture provenant de l'ancien lecteur, puis ne jouer que Dreamy Piano.
+    try {
+      if (window.__originalMusicAudio) {
+        window.__originalMusicAudio.pause();
+        window.__originalMusicAudio.removeAttribute('src');
+        window.__originalMusicAudio.load();
+      }
+    } catch (e) {}
     audio.play().catch(err => console.warn('Lecture audio impossible :', err));
   }, { once: true });
 })();
