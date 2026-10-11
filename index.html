@@ -170,15 +170,15 @@
 html{scroll-behavior:smooth}
 
 :root{
-  --c1:#2a5c8a;
-  --c2:#6aaee8;
+  --c1:#8a1828;
+  --c2:#ef6675;
   --bg:#060a10;
   --bg2:#080c14;
   --text:#f0ece4;
   --text-dim:rgba(240,236,228,.54);
   --text-faint:rgba(240,236,228,.28);
-  --c1-rgb:42,92,138;
-  --c2-rgb:106,174,232;
+  --c1-rgb:138,24,40;
+  --c2-rgb:239,102,117;
 }
 
 body{
@@ -200,6 +200,69 @@ nav,section,footer,.ticker,#ticket-modal{
 ::selection{background:var(--c1);color:var(--text)}
 ::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-thumb{background:var(--c1)}
+
+
+/* ── HOMMAGE : conserver le fond animé original, recoloré en rouge ── */
+body.memorial-mode > nav,
+body.memorial-mode > section,
+body.memorial-mode > .ticker,
+body.memorial-mode > footer,
+body.memorial-mode > #music-bar,
+body.memorial-mode > #ticket-modal,
+body.memorial-mode > #lb,
+body.memorial-mode > #adm-ov,
+body.memorial-mode > .toast {
+  display: none !important;
+}
+body.memorial-mode {
+  --c1: #8b0000;
+  --c2: #ff4d5a;
+  --c1-rgb: 139,0,0;
+  --c2-rgb: 255,77,90;
+  /* On garde le fond de base original : seule sa palette d'accent devient rouge. */
+  background: var(--bg);
+}
+body.memorial-mode #global-canvas {
+  opacity: .22;
+}
+#memorial-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1500;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 28px;
+  text-align: center;
+  background: transparent;
+  pointer-events: none;
+}
+body.memorial-mode #memorial-overlay {
+  display: flex;
+  animation: memorialFade .9s ease both;
+}
+#memorial-overlay h1 {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(38px, 7vw, 78px);
+  color: #fff0f0;
+  margin: 0 0 28px;
+  text-shadow: 0 0 18px rgba(255,35,55,.7), 0 0 55px rgba(180,0,20,.45);
+}
+#memorial-overlay p {
+  max-width: 720px;
+  font-family: 'Shippori Mincho B1', serif;
+  font-size: clamp(16px, 2.2vw, 23px);
+  line-height: 1.85;
+  color: rgba(255,240,240,.96);
+  font-style: italic;
+  text-shadow: 0 2px 12px rgba(0,0,0,.9), 0 0 28px rgba(180,0,20,.55);
+}
+@keyframes memorialFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
 /* ── NAV ── */
 nav{
@@ -744,11 +807,11 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
   <canvas id="entry-canvas" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.28"></canvas>
 
   <div style="position:relative;z-index:1;text-align:center;pointer-events:none;padding:0 30px">
-    <div style="font-family:'Noto Serif JP',serif;font-size:12px;font-weight:200;letter-spacing:.65em;color:rgba(106,174,232,.5);margin-bottom:36px;animation:fu 1.2s ease .2s both">
+    <div style="font-family:'Noto Serif JP',serif;font-size:12px;font-weight:200;letter-spacing:.65em;color:rgba(239,102,117,.5);margin-bottom:36px;animation:fu 1.2s ease .2s both">
       秋山まひる
     </div>
-    <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(52px,10vw,120px);font-weight:700;line-height:.9;letter-spacing:-.025em;color:#f0ece4;text-shadow:0 0 80px rgba(42,92,138,.4);animation:fu 1.2s ease .4s both">
-      <span style="color:#6aaee8">Mahiruu</span><br>Akiyama
+    <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(52px,10vw,120px);font-weight:700;line-height:.9;letter-spacing:-.025em;color:#f0ece4;text-shadow:0 0 80px rgba(138,24,40,.4);animation:fu 1.2s ease .4s both">
+      <span style="color:#ef6675">Mahiruu</span><br>Akiyama
     </div>
     <div style="font-family:'Shippori Mincho B1',serif;font-size:clamp(12px,1.8vw,18px);letter-spacing:.22em;color:rgba(240,236,228,.3);margin-top:18px;animation:fu 1.2s ease .6s both">
       Wiener Musikverein · 12 Avril 2027
@@ -759,7 +822,7 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
       <div style="
         display:inline-block;
         font-family:'DM Serif Display',serif;font-size:10px;letter-spacing:.52em;
-        text-transform:uppercase;color:rgba(106,174,232,.55);
+        text-transform:uppercase;color:rgba(239,102,117,.55);
       ">
         Entrer
       </div>
@@ -772,11 +835,22 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
 
 <style>
 @keyframes pulse-border {
-  0%,100%{border-color:rgba(42,92,138,.45);color:rgba(106,174,232,.8)}
-  50%{border-color:rgba(42,92,138,.85);color:rgba(106,174,232,1)}
+  0%,100%{border-color:rgba(138,24,40,.45);color:rgba(239,102,117,.8)}
+  50%{border-color:rgba(138,24,40,.85);color:rgba(239,102,117,1)}
 }
 #entry-screen.fade-out{opacity:0;pointer-events:none}
 </style>
+
+
+<div id="memorial-overlay" aria-live="polite">
+  <h1>Pianiste décédée</h1>
+  <p>« J’espère que mes mélodies vous auront fait voyager le cœur autant que vous m’avez fait voyager le mien. »</p>
+</div>
+
+
+<audio id="memorial-audio" loop preload="auto">
+  <source src="Dreamy_Piano_-_Sergey_Bryukhno_-_SoundLoadMate_com.mp3" type="audio/mpeg">
+</audio>
 
 <canvas id="global-canvas"></canvas>
 
@@ -954,7 +1028,7 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
 
     <div style="background:rgba(6,10,18,.96);padding:60px 52px;text-align:center;position:relative;">
 
-      <div style="font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.55em;color:rgba(106,174,232,.3);margin-bottom:32px">秋山まひる</div>
+      <div style="font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.55em;color:rgba(239,102,117,.3);margin-bottom:32px">秋山まひる</div>
 
       <div style="font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(22px,3vw,34px);font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.15">
         Billetterie bientôt disponible
@@ -1020,15 +1094,15 @@ footer{border-top:1px solid rgba(240,236,228,.05);padding:56px;text-align:center
           <div class="adm-f">
             <label class="adm-l">Couleur primaire</label>
             <div class="clr-r">
-              <input type="color" class="clr-in" id="c1" value="#2a5c8a" oninput="applyColor1(this.value)">
-              <input class="inp" id="c1h" value="#2a5c8a" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c1').value=this.value;applyColor1(this.value)}">
+              <input type="color" class="clr-in" id="c1" value="#8a1828" oninput="applyColor1(this.value)">
+              <input class="inp" id="c1h" value="#8a1828" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c1').value=this.value;applyColor1(this.value)}">
             </div>
           </div>
           <div class="adm-f">
             <label class="adm-l">Couleur accentuée</label>
             <div class="clr-r">
-              <input type="color" class="clr-in" id="c2" value="#6aaee8" oninput="applyColor2(this.value)">
-              <input class="inp" id="c2h" value="#6aaee8" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c2').value=this.value;applyColor2(this.value)}">
+              <input type="color" class="clr-in" id="c2" value="#ef6675" oninput="applyColor2(this.value)">
+              <input class="inp" id="c2h" value="#ef6675" oninput="if(/^#[0-9A-Fa-f]{6}$/.test(this.value)){document.getElementById('c2').value=this.value;applyColor2(this.value)}">
             </div>
           </div>
           <div class="adm-f">
@@ -1114,7 +1188,7 @@ function applyColor2(val) {
 const THEMES = {
   fire:   { c1:'#c8502a', c2:'#e8a06a' },
   nara:   { c1:'#3d6b2e', c2:'#8ab56a' },
-  ice:    { c1:'#2a5c8a', c2:'#6aaee8' },
+  ice:    { c1:'#8a1828', c2:'#ef6675' },
   sakura: { c1:'#a02860', c2:'#e87aaa' }
 };
 
@@ -1130,8 +1204,8 @@ function applyTheme(t) {
 }
 
 /* ─── GLOBAL SHADER ─── */
-let shaderC2 = [0.42, 0.68, 0.91]; // default blue accent for shader
-let shaderC1 = [0.16, 0.36, 0.54]; // default blue primary
+let shaderC2 = [0.937, 0.4, 0.459]; // red accent for shader
+let shaderC1 = [0.54, 0.094, 0.157]; // red primary
 
 function hexToShaderVec(hex) {
   return [
@@ -1739,8 +1813,8 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm(
         vec2 r=vec2(fbm(uv+2.*q+ti*.15),fbm(uv+2.*q+vec2(8.3,2.8)+ti*.2));
         float f=fbm(uv+2.8*r+ti*.05);f=pow(f,1.35);
         vec3 cBase=vec3(.02,.04,.08);
-        vec3 cMid=vec3(.16,.36,.54)*0.82;
-        vec3 cBright=vec3(.42,.68,.91)*1.05;
+        vec3 cMid=vec3(.54,.094,.157)*0.82;
+        vec3 cBright=vec3(.937,.4,.459)*1.05;
         vec3 col=mix(cBase,cMid,clamp(f*2.2-.6,0.,1.));
         col=mix(col,cBright,clamp(f*3.2-1.5,0.,1.));
         float d=length(uv);col=mix(col,cBase,smoothstep(.28,.88,d));
@@ -1792,5 +1866,23 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();closeAdm(
   }, { once: true });
 })();
 </script>
+
+<script>
+(() => {
+  const entry = document.getElementById('entry-screen');
+  const audio = document.getElementById('memorial-audio');
+  if (!entry || !audio) return;
+  let memorialStarted = false;
+  entry.addEventListener('click', () => {
+    if (memorialStarted) return;
+    memorialStarted = true;
+    document.body.classList.add('memorial-mode');
+    entry.classList.add('fade-out');
+    window.setTimeout(() => { entry.style.display = 'none'; }, 950);
+    audio.play().catch(err => console.warn('Lecture audio impossible :', err));
+  }, { once: true });
+})();
+</script>
+
 </body>
 </html>
